@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Power Sector API
+  description: API for power sector of India
+  version: 1.0.0
+servers:
+- url: "{baseUrl}"
+  variables:
+    baseUrl:
+      description: Base URL for the API
+      default: https://power-sector-india.onrender.com
+paths:
+  /api/v1/electricity-tariff:
+    get:
+      tags:
+      - Electricity Tariff Details By State
+      summary: Returns a list of tariffs by state code
+      operationId: apiV1Electricity_tariffGET
+      parameters:
+      - name: stateCode
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - TN
+          - OD
+        description: The code of the state (e.g 'TN','OD')
+      - name: supplyType
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - LT
+          - HT
+          - EHT
+        description: The type of the supply type (e.g 'LT','HT','EHT')
+      - name: category
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - Domestic
+          - Non-Domestic
+          - Agriculture
+          - Industrial
+        description: The category of users (e.g 'Domestic', 'Non-Domestic','Agriculture','Industrial')
+
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "500":
+          description: Internal server error
+      x-swagger-router-controller: ElectricityTariffDetailsByState
+components: {}
